@@ -18,9 +18,9 @@
                     <span>Central Public Library</span>
                 </div>
                 <ul class="nav-menu" id="nav-menu">
-                    <li><a href="{% url 'homepage' %}">Home</a></li>
-                    <li><a href="{% url 'dashboard' %}">Browse</a></li>
-                    <li><a href="{% url 'login' %}" class="login-btn">Log In</a></li>
+                    <li><a href="{% url 'core:homepage' %}">Home</a></li>
+                    <li><a href="{% url 'core:dashboard' %}">Browse</a></li>
+                    <li><a href="{% url 'accounts:login' %}" class="login-btn">Log In</a></li>
                 </ul>
                 <div class="hamburger" id="hamburger">
                     <span></span>
@@ -37,7 +37,7 @@
             <h1 class="hero-title">Welcome to Your Community Library</h1>
             <p class="hero-subtitle">Discover, Learn, and Connect in Our Digital Age</p>
             <div class="hero-buttons">
-                <a href="dashboard.html" class="btn btn-primary">Browse Catalog</a>
+                <a href="{% url 'core:dashboard' %}" class="btn btn-primary">Browse Catalog</a>
                 <a href="#about" class="btn btn-secondary">Learn More</a>
             </div>
         </div>
@@ -116,7 +116,7 @@
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="dashboard.html">Browse</a></li>
+                        <li><a href="{% url 'core:dashboard' %}">Browse</a></li>
                         <li><a href="#about">About</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
