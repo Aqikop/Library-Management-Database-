@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 def homepage(request):
-    return render(request, 'home.html')
+    return render(request, 'homepage.html')
 
 def login_view(request):
     return render(request, 'login.html')
@@ -18,3 +18,8 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
+
+def dashboard_view(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return render(request, 'dashboard.html')

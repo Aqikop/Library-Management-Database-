@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Library - Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-book-open"></i>
+                    <span>My Library</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="{% url 'homepage' %}">Home</a></li>
+                    <li><a href="#browse" class="active">Browse</a></li>
+                    <li><a href="#" class="user-account">
+                        <i class="fas fa-user-circle"></i> Account
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard">
+        <div class="container">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <h1 class="motto">"Read Today, Lead Tomorrow"</h1>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search from your books..." id="dashboard-search">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Left Sidebar -->
+                <aside class="sidebar">
+                    <div class="filter-section">
+                        <h3>Categories</h3>
+                        <ul class="category-list">
+                            <li><a href="#" data-category="all" class="active">All Books</a></li>
+                            <li><a href="#" data-category="recently-read">Recently Read</a></li>
+                            <li><a href="#" data-category="favorites">Favorites</a></li>
+                            <li><a href="#" data-category="want-to-read">Want to Read</a></li>
+                            <li><a href="#" data-category="reading">Currently Reading</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>Genres</h3>
+                        <ul class="genre-list">
+                            <li><a href="#" data-genre="fiction">Fiction</a></li>
+                            <li><a href="#" data-genre="non-fiction">Non-Fiction</a></li>
+                            <li><a href="#" data-genre="mystery">Mystery</a></li>
+                            <li><a href="#" data-genre="romance">Romance</a></li>
+                            <li><a href="#" data-genre="sci-fi">Sci-Fi</a></li>
+                            <li><a href="#" data-genre="biography">Biography</a></li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <section class="main-content">
+                    <!-- Your Books Section -->
+                    <div class="book-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-book"></i> Your Books (Most Recent)</h2>
+                            <button class="see-all-btn">See All</button>
+                        </div>
+                        <div class="book-grid" id="recent-books">
+                            <!-- Books will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Hot Topics Section -->
+                    <div class="book-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-fire"></i> Hot Topics</h2>
+                            <button class="see-all-btn">See All</button>
+                        </div>
+                        <div class="book-grid" id="hot-topics">
+                            <!-- Books will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Right Sidebar - Book Details -->
+                <aside class="book-details-panel" id="book-details">
+                    <div class="panel-content">
+                        <h3>Select a book to view details</h3>
+                        <p>Click on any book to see its information, rating, and options.</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-book-open"></i>
+                        <span>Central Public Library</span>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="#">Drama</a></li>
+                        <li><a href="#">Scientific</a></li>
+                        <li><a href="#">Romantic</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="#">How to Borrow</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Visit</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Address</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> Time</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>About</h4>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add Book Modal -->
+    <div id="add-book-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Book</h2>
+            <form id="add-book-form">
+                <input type="text" id="book-title" placeholder="Book Title" required>
+                <input type="text" id="book-author" placeholder="Author" required>
+                <input type="url" id="book-cover" placeholder="Cover Image URL (optional)">
+                <select id="book-genre" required>
+                    <option value="">Select Genre</option>
+                    <option value="fiction">Fiction</option>
+                    <option value="non-fiction">Non-Fiction</option>
+                    <option value="mystery">Mystery</option>
+                    <option value="romance">Romance</option>
+                    <option value="sci-fi">Sci-Fi</option>
+                    <option value="biography">Biography</option>
+                </select>
+                <select id="book-status" required>
+                    <option value="">Reading Status</option>
+                    <option value="want-to-read">Want to Read</option>
+                    <option value="reading">Currently Reading</option>
+                    <option value="read">Read</option>
+                </select>
+                <div class="rating-input">
+                    <label>Rating:</label>
+                    <div class="stars">
+                        <i class="fas fa-star" data-rating="1"></i>
+                        <i class="fas fa-star" data-rating="2"></i>
+                        <i class="fas fa-star" data-rating="3"></i>
+                        <i class="fas fa-star" data-rating="4"></i>
+                        <i class="fas fa-star" data-rating="5"></i>
+                    </div>
+                </div>
+                <textarea id="book-notes" placeholder="Personal notes (optional)"></textarea>
+                <button type="submit">Add Book</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Add Button -->
+    <button id="add-book-btn" class="floating-add-btn">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+</html>
