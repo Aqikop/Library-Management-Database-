@@ -175,6 +175,7 @@ function addLoadingAnimation() {
 document.addEventListener('DOMContentLoaded', addLoadingAnimation);
 
 // Parallax effect for hero section
+// + track scroll /click events
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const hero = document.querySelector('.hero');
@@ -184,7 +185,47 @@ window.addEventListener('scroll', () => {
         const rate = scrolled * -0.5;
         heroContent.style.transform = `translateY(${rate}px)`;
     }
+    // Send scroll activity to backend  
+    fetch("/track-activity/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken")  // Ensure CSRF token is included
+        },
+        body: JSON.stringify({ activity: "scroll", position: scrolled, page : window.location.pathname })
+    })
 });
+
+// Track page visit when loaded
+document.addEventListener("DOMContentLoaded", () => {
+    fetch("/track-activity/", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            action: "visit",
+            page: window.location.pathname
+        })
+    });
+});
+
+// Helper to get CSRF token from cookies
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 // Add scroll indicator
 function createScrollIndicator() {
