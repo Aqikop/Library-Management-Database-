@@ -11,7 +11,8 @@
     <div class="login-container">
         <h1>Login</h1>
         
-        <form id="loginForm">
+        <form method="post" action="{% url 'users:login' %}">
+            {% csrf_token %}
             <div class="form-group">
                 <input type="email" id="email" name="email" placeholder="Email" required>
             </div>
@@ -26,7 +27,7 @@
         </form>
         
         <div class="signup-link">
-            Don't have an account? <a href="{% url 'accounts:register' %}">Register</a>
+            Don't have an account? <a href="{% url 'users:register' %}">Register</a>
         </div>
     </div>
 

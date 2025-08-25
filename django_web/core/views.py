@@ -6,5 +6,5 @@ def homepage(request):
 
 def dashboard_view(request):
     if not request.user.is_authenticated:
-        return redirect('accounts:login')  # Use namespaced URL name
+        return redirect('users:login')  # Use namespaced URL name
     return render(request, 'core/dashboard.html')  # Note the core/ prefix
