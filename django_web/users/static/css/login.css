@@ -36,7 +36,7 @@ h1 {
     text-align: left;
 }
 
-input[type="email"], 
+input[type="text"], 
 input[type="password"] {
     width: 100%;
     padding: 1rem;
@@ -48,14 +48,14 @@ input[type="password"] {
     transition: all 0.2s ease;
 }
 
-input[type="email"]:focus, 
+input[type="text"]:focus, 
 input[type="password"]:focus {
     outline: none;
     background: #ebebed;
     transform: translateY(-1px);
 }
 
-input[type="email"]::placeholder,
+input[type="text"]::placeholder,
 input[type="password"]::placeholder {
     color: #666;
 }
