@@ -20,7 +20,26 @@
                 <ul class="nav-menu" id="nav-menu">
                     <li><a href="{% url 'core:homepage' %}">Home</a></li>
                     <li><a href="{% url 'core:dashboard' %}">Browse</a></li>
-                    <li><a href="{% url 'users:login' %}" class="login-btn">Log In</a></li>
+                    {% if is_authenticated %}
+                        <li class="dropdown">
+                            <button class="dropbtn">
+                                <i class="fas fa-user-circle"></i> Account
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="{% url 'users:settings' %}">
+                                    <i class="fas fa-cog"></i> Settings
+                                </a>
+                                <form action="{% url 'users:logout' %}" method="POST" id="logout-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-btn">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url 'users:login' %}" class="login-btn">Log In</a></li>
+                    {% endif %}
                 </ul>
                 <div class="hamburger" id="hamburger">
                     <span></span>

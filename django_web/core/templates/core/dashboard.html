@@ -20,22 +20,26 @@
                 <ul class="nav-menu">
                     <li><a href="{% url 'core:homepage' %}">Home</a></li>
                     <li><a href="#browse" class="active">Browse</a></li>
-                    <li class="dropdown">
-                        <button class="dropbtn">
-                            <i class="fas fa-user-circle"></i> Account
-                        </button>
-                        <div class="dropdown-content">
-                            <a href="{% url 'users:settings' %}">
-                                <i class="fas fa-cog"></i> Settings
-                            </a>
-                            <form action="{% url 'users:logout' %}" method="POST" id="logout-form">
-                                {% csrf_token %}
-                                <button type="submit" class="dropdown-btn">
-                                    <i class="fas fa-sign-out-alt"></i> Logout
-                                </button>
-                            </form>
-                        </div>
-                    </li>
+                    {% if is_authenticated %}
+                        <li class="dropdown">
+                            <button class="dropbtn">
+                                <i class="fas fa-user-circle"></i> Account
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="{% url 'users:settings' %}">
+                                    <i class="fas fa-cog"></i> Settings
+                                </a>
+                                <form action="{% url 'users:logout' %}" method="POST" id="logout-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-btn">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url 'users:login' %}" class="login-btn">Log In</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
@@ -89,10 +93,20 @@
                     <div class="book-section">
                         <div class="section-header">
                             <h2><i class="fas fa-book"></i> Your Books (Most Recent)</h2>
-                            <button class="see-all-btn">See All</button>
+                            {% if is_authenticated %}
+                                <button class="see-all-btn">See All</button>
+                            {% endif %}
                         </div>
                         <div class="book-grid" id="recent-books">
-                            <!-- Books will be populated by JavaScript -->
+                            {% if is_authenticated %}
+                                <!-- Books will be populated by JavaScript -->
+                            {% else %}
+                                <div class="login-prompt">
+                                    <i class="fas fa-lock"></i>
+                                    <h3>Login Required</h3>
+                                    <p>Please <a href="{% url 'users:login' %}">login</a> or <a href="{% url 'users:register' %}">register</a> to see your books.</p>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
 

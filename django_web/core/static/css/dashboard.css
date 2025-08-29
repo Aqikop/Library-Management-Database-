@@ -705,3 +705,50 @@ body {
     padding: 0;
     border-top: 1px solid #eee;
 }
+
+/* Add these styles for the login prompt */
+.login-prompt {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.login-prompt i {
+    font-size: 2.5rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.login-prompt h3 {
+    color: #343a40;
+    margin-bottom: 0.5rem;
+}
+
+.login-prompt p {
+    color: #6c757d;
+}
+
+.login-prompt a {
+    color: #4a6bc4;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-prompt a:hover {
+    text-decoration: underline;
+}
+
+.login-btn {
+    background: #e74c3c !important;
+    color: white !important;
+    border-radius: 25px !important;
+    padding: 8px 20px !important;
+}
+
+.login-btn:hover {
+    background: #c0392b !important;
+    color: white !important;
+}
