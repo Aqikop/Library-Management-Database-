@@ -37,6 +37,12 @@ def register_view(request):
         form = UserCreationForm()
     return render(request, 'users/register.html', {'form': form})  # Note the users/ prefix
 
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('core:homepage')
+    return redirect('core:dashboard')
+
 @login_required
 def settings_view(request):
     user = request.user
