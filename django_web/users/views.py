@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from .models import Reader
 # Create your views here.
 
@@ -35,3 +36,8 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'users/register.html', {'form': form})  # Note the users/ prefix
+
+@login_required
+def settings_view(request):
+    user = request.user
+    return render(request, 'users/settings.html')
