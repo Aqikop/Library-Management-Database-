@@ -20,9 +20,22 @@
                 <ul class="nav-menu">
                     <li><a href="{% url 'core:homepage' %}">Home</a></li>
                     <li><a href="#browse" class="active">Browse</a></li>
-                    <li><a href="{% url 'users:settings' %}" class="user-account">
+                <li class="dropdown">
+                    <button class="dropbtn">
                         <i class="fas fa-user-circle"></i> Account
-                    </a></li>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'users:settings' %}">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <form action="{% url 'users:logout' %}" method="POST" id="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-btn">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                        </form>
+                    </div>
+                </li>
                 </ul>
             </div>
         </nav>
