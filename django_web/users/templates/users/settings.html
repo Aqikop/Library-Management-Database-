@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Settings - My Library</title>
+    <link rel="stylesheet" href="{% static 'css/settings.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-book-open"></i>
+                    <span>My Library</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="{% url 'core:homepage' %}">Home</a></li>
+                    <li><a href="{% url 'core:dashboard' %}">Browse</a></li>
+                    <li><a href="#" class="user-account active">
+                        <i class="fas fa-user-circle"></i> Settings
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Settings Content -->
+    <main class="settings-main">
+        <div class="container">
+            <!-- Settings Header -->
+            <div class="settings-header">
+                <h1><i class="fas fa-cog"></i> Account Settings</h1>
+                <p>Manage your profile information and preferences</p>
+            </div>
+
+            <!-- Settings Layout -->
+            <div class="settings-layout">
+                <!-- Settings Sidebar -->
+                <aside class="settings-sidebar">
+                    <ul class="settings-menu">
+                        <li><a href="#profile" class="settings-tab active" data-tab="profile">
+                            <i class="fas fa-user"></i> Profile Information
+                        </a></li>
+                        <li><a href="#avatar" class="settings-tab" data-tab="avatar">
+                            <i class="fas fa-image"></i> Avatar & Photo
+                        </a></li>
+                        <li><a href="#privacy" class="settings-tab" data-tab="privacy">
+                            <i class="fas fa-shield-alt"></i> Privacy & Security
+                        </a></li>
+                        <li><a href="#notifications" class="settings-tab" data-tab="notifications">
+                            <i class="fas fa-bell"></i> Notifications
+                        </a></li>
+                    </ul>
+                </aside>
+
+                <!-- Settings Content -->
+                <section class="settings-content">
+                    <!-- Profile Information Tab -->
+                    <div class="settings-panel active" id="profile-panel">
+                        <div class="panel-header">
+                            <h2><i class="fas fa-user"></i> Profile Information</h2>
+                            <p>Update your personal information and contact details</p>
+                        </div>
+
+                        <form class="settings-form" id="profile-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="first-name">First Name</label>
+                                    <input type="text" id="first-name" name="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name">Last Name</label>
+                                    <input type="text" id="last-name" name="lastName" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required>
+                                <small class="form-help">Used for account recovery and notifications</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone">
+                                <small class="form-help">Optional - for account verification</small>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="birth-date">Date of Birth</label>
+                                    <input type="date" id="birth-date" name="birthDate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender">Gender</label>
+                                    <select id="gender" name="gender">
+                                        <option value="">Prefer not to say</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bio">Bio</label>
+                                <textarea id="bio" name="bio" rows="4" placeholder="Tell us a bit about yourself and your reading interests..."></textarea>
+                                <small class="form-help">This will be visible on your public profile</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="location">Location</label>
+                                <input type="text" id="location" name="location" placeholder="City, Country">
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-profile">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Avatar & Photo Tab -->
+                    <div class="settings-panel" id="avatar-panel">
+                        <div class="panel-header">
+                            <h2><i class="fas fa-image"></i> Avatar & Photo</h2>
+                            <p>Customize your profile picture and avatar</p>
+                        </div>
+
+                        <div class="avatar-section">
+                            <div class="current-avatar">
+                                <div class="avatar-preview" id="avatar-preview">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="avatar-info">
+                                    <h3>Current Avatar</h3>
+                                    <p>Your profile picture is visible to other users</p>
+                                </div>
+                            </div>
+
+                            <div class="avatar-options">
+                                <h3>Upload New Photo</h3>
+                                <div class="upload-area" id="upload-area">
+                                    <input type="file" id="avatar-upload" accept="image/*" hidden>
+                                    <div class="upload-content">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p>Click to upload or drag and drop</p>
+                                        <small>PNG, JPG up to 5MB</small>
+                                    </div>
+                                </div>
+
+                                <div class="avatar-actions">
+                                    <button class="btn btn-primary" id="upload-btn">Choose File</button>
+                                    <button class="btn btn-secondary" id="remove-avatar">Remove Photo</button>
+                                </div>
+                            </div>
+
+                            <div class="avatar-gallery">
+                                <h3>Choose Default Avatar</h3>
+                                <div class="avatar-grid" id="avatar-grid">
+                                    <!-- Avatar options will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Privacy & Security Tab -->
+                    <div class="settings-panel" id="privacy-panel">
+                        <div class="panel-header">
+                            <h2><i class="fas fa-shield-alt"></i> Privacy & Security</h2>
+                            <p>Manage your account security settings</p>
+                        </div>
+
+                        <form class="settings-form" id="privacy-form">
+                            <div class="security-section">
+                                <h3>Password</h3>
+                                <div class="form-group">
+                                    <label for="current-password">Current Password</label>
+                                    <input type="password" id="current-password" name="currentPassword">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="new-password">New Password</label>
+                                        <input type="password" id="new-password" name="newPassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirm-password">Confirm New Password</label>
+                                        <input type="password" id="confirm-password" name="confirmPassword">
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-primary" id="change-password-btn">Change Password</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Notifications Tab -->
+                    <div class="settings-panel" id="notifications-panel">
+                        <div class="panel-header">
+                            <h2><i class="fas fa-bell"></i> Notifications</h2>
+                            <p>Choose what notifications you want to receive</p>
+                        </div>
+
+                        <form class="settings-form" id="notifications-form">
+                            <div class="notification-section">
+                                <h3>Email Notifications</h3>
+                                <div class="form-group">
+                                    <label class="toggle-label">
+                                        <input type="checkbox" id="email-reminders">
+                                        <span class="toggle-slider"></span>
+                                        Book return reminders
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="toggle-label">
+                                        <input type="checkbox" id="email-recommendations">
+                                        <span class="toggle-slider"></span>
+                                        New book recommendations
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="toggle-label">
+                                        <input type="checkbox" id="email-events">
+                                        <span class="toggle-slider"></span>
+                                        Library events and news
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="notification-section">
+                                <h3>Browser Notifications</h3>
+                                <div class="form-group">
+                                    <label class="toggle-label">
+                                        <input type="checkbox" id="browser-reminders">
+                                        <span class="toggle-slider"></span>
+                                        Reading goal reminders
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="toggle-label">
+                                        <input type="checkbox" id="browser-updates">
+                                        <span class="toggle-slider"></span>
+                                        New book arrivals
+                                    </label>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-book-open"></i>
+                        <span>Central Public Library</span>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="dashboard.html">Browse</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Confirm Action</h3>
+            <p id="modal-message">Are you sure you want to proceed?</p>
+            <div class="modal-actions">
+                <button class="btn btn-danger" id="confirm-btn">Confirm</button>
+                <button class="btn btn-secondary" id="cancel-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/settings.js' %}"></script>
+</body>
+</html>
