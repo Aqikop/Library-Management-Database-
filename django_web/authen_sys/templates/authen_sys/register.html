@@ -11,7 +11,7 @@
     <div class="register-container">
         <h1>Register</h1>
         
-        <form method="post" action="{% url 'users:register'%}">
+        <form method="post" action="{% url 'authen_sys:register'%}">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username:</label>
@@ -38,7 +38,7 @@
         </form>
         
         <div class="login-link">
-            Already have an account? <a href="{% url 'users:login' %}">Login</a>
+            Already have an account? <a href="{% url 'authen_sys:login' %}">Login</a>
         </div>
     </div>
 

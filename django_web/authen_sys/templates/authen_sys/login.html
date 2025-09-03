@@ -11,7 +11,7 @@
     <div class="login-container">
         <h1>Login</h1>
         
-        <form method="post" action="{% url 'users:login' %}">
+        <form method="post" action="{% url 'authen_sys:login' %}">
             {% csrf_token %}
             <div class="form-group">
                 <input type="text" id="username" name="username" placeholder="Username" required>
@@ -27,7 +27,7 @@
         </form>
         
         <div class="signup-link">
-            Don't have an account? <a href="{% url 'users:register' %}">Register</a>
+            Don't have an account? <a href="{% url 'authen_sys:register' %}">Register</a>
         </div>
     </div>
 
