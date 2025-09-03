@@ -29,7 +29,7 @@
                                 <a href="{% url 'users:settings' %}">
                                     <i class="fas fa-cog"></i> Settings
                                 </a>
-                                <form action="{% url 'users:logout' %}" method="POST" id="logout-form">
+                                <form action="{% url 'authen_sys:logout' %}" method="POST" id="logout-form">
                                     {% csrf_token %}
                                     <button type="submit" class="dropdown-btn">
                                         <i class="fas fa-sign-out-alt"></i> Logout
@@ -38,7 +38,7 @@
                             </div>
                         </li>
                     {% else %}
-                        <li><a href="{% url 'users:login' %}" class="login-btn">Log In</a></li>
+                        <li><a href="{% url 'authen_sys:login' %}" class="login-btn">Log In</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -104,7 +104,7 @@
                                 <div class="login-prompt">
                                     <i class="fas fa-lock"></i>
                                     <h3>Login Required</h3>
-                                    <p>Please <a href="{% url 'users:login' %}">login</a> or <a href="{% url 'users:register' %}">register</a> to see your books.</p>
+                                    <p>Please <a href="{% url 'authen_sys:login' %}">login</a> or <a href="{% url 'authen_sys:register' %}">register</a> to see your books.</p>
                                 </div>
                             {% endif %}
                         </div>

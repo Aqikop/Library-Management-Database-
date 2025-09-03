@@ -28,7 +28,7 @@
                                 <a href="{% url 'users:settings' %}">
                                     <i class="fas fa-cog"></i> Settings
                                 </a>
-                                <form action="{% url 'users:logout' %}" method="POST" id="logout-form">
+                                <form action="{% url 'authen_sys:logout' %}" method="POST" id="logout-form">
                                     {% csrf_token %}
                                     <button type="submit" class="dropdown-btn">
                                         <i class="fas fa-sign-out-alt"></i> Logout
