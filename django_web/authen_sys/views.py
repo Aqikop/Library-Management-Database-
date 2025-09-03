@@ -3,9 +3,24 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django import forms
 from users.models import Reader
 
 # Create your views here.
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
+    
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user
+
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
@@ -19,17 +34,21 @@ def login_view(request):
 
 def register_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         username = request.POST.get('username')
+        email = request.POST.get('email')
         
         if User.objects.filter(username=username).exists():
             messages.error(request, 'This username is already taken.')
             return render(request, 'authen_sys/register.html', {'form': form})
         
+        if User.objects.filter(email=email).exists() or Reader.objects.filter(email=email).exists():
+            messages.error(request, 'This email is already registered.')
+            return render(request, 'authen_sys/register.html', {'form': form})
+        
         if form.is_valid():
             
             new_user = form.save()
-            email = request.POST.get('email')
             
             Reader.objects.create(
                 user = new_user,
