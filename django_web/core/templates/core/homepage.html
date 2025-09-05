@@ -1,161 +1,120 @@
-<!DOCTYPE html>
+{% extends 'nav_bar.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Central Public Library - Home</title>
-    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="navbar">
-            <div class="nav-container">
+
+{% block title %}Central Public Library - Home{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="home" class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Welcome to Your Community Library</h1>
+        <p class="hero-subtitle">Discover, Learn, and Connect in Our Digital Age</p>
+        <div class="hero-buttons">
+            <a href="{% url 'core:dashboard' %}" class="btn btn-primary">Browse Catalog</a>
+            <a href="#about" class="btn btn-secondary">Learn More</a>
+        </div>
+    </div>
+    <div class="hero-search">
+        <div class="search-container">
+            <input type="text" placeholder="Search books, authors, subjects..." id="search-input">
+            <button class="search-btn" id="search-btn">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Stats -->
+<section class="stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item" data-counter="50000">
+                <i class="fas fa-book"></i>
+                <span class="stat-number">0</span>
+                <span class="stat-label">Books</span>
+            </div>
+            <div class="stat-item" data-counter="15000">
+                <i class="fas fa-users"></i>
+                <span class="stat-number">0</span>
+                <span class="stat-label">Members</span>
+            </div>
+            <div class="stat-item" data-counter="5000">
+                <i class="fas fa-download"></i>
+                <span class="stat-number">0</span>
+                <span class="stat-label">Digital Resources</span>
+            </div>
+            <div class="stat-item" data-counter="200">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="stat-number">0</span>
+                <span class="stat-label">Events This Year</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Hours & Location -->
+<section id="about" class="info">
+    <div class="container">
+        <div class="info-grid">
+            <div class="info-card">
+                <h3><i class="fas fa-clock"></i> Library Hours</h3>
+                <ul>
+                    <li>Monday - Thursday: 9:00 AM - 8:00 PM</li>
+                    <li>Friday - Saturday: 9:00 AM - 6:00 PM</li>
+                    <li>Sunday: 12:00 PM - 5:00 PM</li>
+                </ul>
+            </div>
+            <div class="info-card">
+                <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
+                <p>123 Main Street<br>
+                Downtown City, ST 12345<br>
+                Phone: (555) 123-4567<br>
+                Email: info@centrallibrary.org</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer id="contact" class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
                 <div class="logo">
                     <i class="fas fa-book-open"></i>
                     <span>Central Public Library</span>
                 </div>
-                <ul class="nav-menu" id="nav-menu">
-                    <li><a href="{% url 'core:homepage' %}">Home</a></li>
+                <p>Serving our community with knowledge, resources, and connections since 1952.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
                     <li><a href="{% url 'core:dashboard' %}">Browse</a></li>
-                    {% if is_authenticated %}
-                        <li class="dropdown">
-                            <button class="dropbtn">
-                                <i class="fas fa-user-circle"></i> Account
-                            </button>
-                            <div class="dropdown-content">
-                                <a href="{% url 'users:settings' %}">
-                                    <i class="fas fa-cog"></i> Settings
-                                </a>
-                                <form action="{% url 'authen_sys:logout' %}" method="POST" id="logout-form">
-                                    {% csrf_token %}
-                                    <button type="submit" class="dropdown-btn">
-                                        <i class="fas fa-sign-out-alt"></i> Logout
-                                    </button>
-                                </form>
-                            </div>
-                        </li>
-                    {% else %}
-                        <li><a href="{% url 'authen_sys:login' %}" class="login-btn">Log In</a></li>
-                    {% endif %}
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
-                <div class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
             </div>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Welcome to Your Community Library</h1>
-            <p class="hero-subtitle">Discover, Learn, and Connect in Our Digital Age</p>
-            <div class="hero-buttons">
-                <a href="{% url 'core:dashboard' %}" class="btn btn-primary">Browse Catalog</a>
-                <a href="#about" class="btn btn-secondary">Learn More</a>
-            </div>
-        </div>
-        <div class="hero-search">
-            <div class="search-container">
-                <input type="text" placeholder="Search books, authors, subjects..." id="search-input">
-                <button class="search-btn" id="search-btn">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Quick Stats -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item" data-counter="50000">
-                    <i class="fas fa-book"></i>
-                    <span class="stat-number">0</span>
-                    <span class="stat-label">Books</span>
-                </div>
-                <div class="stat-item" data-counter="15000">
-                    <i class="fas fa-users"></i>
-                    <span class="stat-number">0</span>
-                    <span class="stat-label">Members</span>
-                </div>
-                <div class="stat-item" data-counter="5000">
-                    <i class="fas fa-download"></i>
-                    <span class="stat-number">0</span>
-                    <span class="stat-label">Digital Resources</span>
-                </div>
-                <div class="stat-item" data-counter="200">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span class="stat-number">0</span>
-                    <span class="stat-label">Events This Year</span>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Hours & Location -->
-    <section id="about" class="info">
-        <div class="container">
-            <div class="info-grid">
-                <div class="info-card">
-                    <h3><i class="fas fa-clock"></i> Library Hours</h3>
-                    <ul>
-                        <li>Monday - Thursday: 9:00 AM - 8:00 PM</li>
-                        <li>Friday - Saturday: 9:00 AM - 6:00 PM</li>
-                        <li>Sunday: 12:00 PM - 5:00 PM</li>
-                    </ul>
-                </div>
-                <div class="info-card">
-                    <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
-                    <p>123 Main Street<br>
-                    Downtown City, ST 12345<br>
-                    Phone: (555) 123-4567<br>
-                    Email: info@centrallibrary.org</p>
-                </div>
-            </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Central Public Library. All rights reserved.</p>
         </div>
-    </section>
+    </div>
+</footer>
+{% endblock %}
 
-    <!-- Footer -->
-    <footer id="contact" class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="logo">
-                        <i class="fas fa-book-open"></i>
-                        <span>Central Public Library</span>
-                    </div>
-                    <p>Serving our community with knowledge, resources, and connections since 1952.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="{% url 'core:dashboard' %}">Browse</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Central Public Library. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="{% static 'js/homepage.js' %}"></script>
-</body>
-</html>
+{% block extra_js %}
+<script src="{% static 'js/homepage.js' %}"></script>
+{% endblock %}

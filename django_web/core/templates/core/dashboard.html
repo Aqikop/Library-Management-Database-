@@ -1,69 +1,33 @@
-<!DOCTYPE html>
+{% extends 'nav_bar.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Library - Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="logo">
-                    <i class="fas fa-book-open"></i>
-                    <span>My Library</span>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="{% url 'core:homepage' %}">Home</a></li>
-                    <li><a href="#browse" class="active">Browse</a></li>
-                    {% if is_authenticated %}
-                        <li class="dropdown">
-                            <button class="dropbtn">
-                                <i class="fas fa-user-circle"></i> Account
-                            </button>
-                            <div class="dropdown-content">
-                                <a href="{% url 'users:settings' %}">
-                                    <i class="fas fa-cog"></i> Settings
-                                </a>
-                                <form action="{% url 'authen_sys:logout' %}" method="POST" id="logout-form">
-                                    {% csrf_token %}
-                                    <button type="submit" class="dropdown-btn">
-                                        <i class="fas fa-sign-out-alt"></i> Logout
-                                    </button>
-                                </form>
-                            </div>
-                        </li>
-                    {% else %}
-                        <li><a href="{% url 'authen_sys:login' %}" class="login-btn">Log In</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
-    </header>
 
-    <!-- Main Dashboard -->
-    <main class="dashboard">
-        <div class="container">
-            <!-- Dashboard Header -->
-            <div class="dashboard-header">
-                <h1 class="motto">"Read Today, Lead Tomorrow"</h1>
-                <div class="search-bar">
-                    <input type="text" placeholder="Search from your books..." id="dashboard-search">
-                    <button class="search-btn">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
+{% block title %}Central Public Library - Dashboard{% endblock %}
 
-            <!-- Dashboard Content -->
-            <div class="dashboard-content">
-                <!-- Left Sidebar -->
-                <aside class="sidebar">
-                    <div class="filter-section">
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Main Dashboard -->
+<main class="dashboard">
+    <div class="container">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <h1 class="motto">"Read Today, Lead Tomorrow"</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="Search from your books..." id="dashboard-search">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Left Sidebar -->
+            <aside class="sidebar">
+                <!-- ...existing sidebar code... -->
+		<div class="filter-section">
                         <h3>Categories</h3>
                         <ul class="category-list">
                             <li><a href="#" data-category="all" class="active">All Books</a></li>
@@ -85,12 +49,12 @@
                             <li><a href="#" data-genre="biography">Biography</a></li>
                         </ul>
                     </div>
-                </aside>
+            </aside>
 
-                <!-- Main Content -->
-                <section class="main-content">
-                    <!-- Your Books Section -->
-                    <div class="book-section">
+            <!-- Main Content -->
+            <section class="main-content">
+                <!-- ...existing main content code... -->
+		<div class="book-section">
                         <div class="section-header">
                             <h2><i class="fas fa-book"></i> Your Books (Most Recent)</h2>
                             {% if is_authenticated %}
@@ -120,22 +84,24 @@
                             <!-- Books will be populated by JavaScript -->
                         </div>
                     </div>
-                </section>
+            </section>
 
-                <!-- Right Sidebar - Book Details -->
-                <aside class="book-details-panel" id="book-details">
-                    <div class="panel-content">
+            <!-- Right Sidebar - Book Details -->
+            <aside class="book-details-panel" id="book-details">
+                <!-- ...existing book details code... -->
+		<div class="panel-content">
                         <h3>Select a book to view details</h3>
                         <p>Click on any book to see its information, rating, and options.</p>
                     </div>
-                </aside>
-            </div>
+            </aside>
         </div>
-    </main>
+    </div>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
+<!-- Footer -->
+<footer class="footer">
+    <!-- ...existing footer code... -->
+	<div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="logo">
@@ -170,11 +136,12 @@
                 </div>
             </div>
         </div>
-    </footer>
+</footer>
 
-    <!-- Add Book Modal -->
-    <div id="add-book-modal" class="modal">
-        <div class="modal-content">
+<!-- Add Book Modal -->
+<div id="add-book-modal" class="modal">
+    <!-- ...existing modal code... -->
+	<div class="modal-content">
             <span class="close">&times;</span>
             <h2>Add New Book</h2>
             <form id="add-book-form">
@@ -210,13 +177,14 @@
                 <button type="submit">Add Book</button>
             </form>
         </div>
-    </div>
+</div>
 
-    <!-- Floating Add Button -->
-    <button id="add-book-btn" class="floating-add-btn">
-        <i class="fas fa-plus"></i>
-    </button>
+<!-- Floating Add Button -->
+<button id="add-book-btn" class="floating-add-btn">
+    <i class="fas fa-plus"></i>
+</button>
+{% endblock %}
 
-    <script src="{% static 'js/dashboard.js' %}"></script>
-</body>
-</html>
+{% block extra_js %}
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}
