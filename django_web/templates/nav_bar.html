@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Central Public Library{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/nav_bar.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-book-open"></i>
+                    <span>Central Public Library</span>
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="{% url 'core:homepage' %}">Home</a></li>
+                    <li><a href="{% url 'core:dashboard' %}">Browse</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="dropdown">
+                            <button class="dropbtn">
+                                <i class="fas fa-user-circle"></i> Account
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="{% url 'users:settings' %}">
+                                    <i class="fas fa-cog"></i> Settings
+                                </a>
+                                <form action="{% url 'authen_sys:logout' %}" method="POST" id="logout-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-btn">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url 'authen_sys:login' %}" class="login-btn">Log In</a></li>
+                    {% endif %}
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
