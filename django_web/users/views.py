@@ -56,6 +56,10 @@ def settings_view(request):
         reader = user.reader # get the coressponding reader (Reader model)
         
         new_username = request.POST.get('username')
+        new_email = request.POST.get('email')
+        new_firstname = request.POST.get('firstname')
+        new_lastname = request.POST.get('lastname')
+        
         if new_username and new_username != user.username:
             # check if username is taken
             if User.objects.filter(username=new_username).exclude(pk=user.pk).exists():
@@ -63,7 +67,29 @@ def settings_view(request):
             else:
                 user.username = new_username
                 user.save()
-                print("new username: " + user.username)    
+                print("new username: " + user.username)
+
+        # check if email is taken
+        if new_email and new_email != user.email:
+            if User.objects.filter(email=new_email).exclude(pk=user.pk).exists():
+                messages.error(request, 'Email already taken.')
+            else:
+                user.email = new_email
+                reader.email = new_email
+                user.save()
+                print("new email: " + user.email)    
+        
+        if new_firstname and new_firstname != user.firstname:
+            user.firstname = new_firstname
+            reader.firstname = new_firstname
+            user.save()
+            print("new firstname: " + user.firstname)    
+        
+        if new_lastname and new_lastname != user.lastname:      
+            user.lastname = new_lastname
+            reader.lastname = new_lastname
+            user.save()
+            print("new lastname: " + user.lastname)    
 
         birthday = request.POST.get('birthday')
         if birthday == '':
@@ -71,9 +97,8 @@ def settings_view(request):
         else:
             reader.bbirthday = birthday 
         
-        reader.firstname = request.POST.get('firstname')
-        reader.lastname = request.POST.get('lastname')
-        reader.email = request.POST.get('email')
+        # reader.firstname = request.POST.get('firstname')
+        # reader.lastname = request.POST.get('lastname')
         reader.phone_no = request.POST.get('phone_no')
         reader.gender = request.POST.get('gender')
         reader.bio = request.POST.get('bio')
