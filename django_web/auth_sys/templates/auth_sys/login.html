@@ -11,7 +11,7 @@
     <div class="login-container">
         <h1>Login</h1>
         
-        <form method="post" action="{% url 'users:login' %}">
+        <form method="post" action="{% url 'auth_sys:login' %}">
             {% csrf_token %}
             <div class="form-group">
                 <input type="text" id="username" name="username" placeholder="Username" required>
@@ -21,13 +21,13 @@
                 <input type="password" id="password" name="password" placeholder="Password" required>
             </div>
             
-            <a href="#" class="forgot-password">Forgot password?</a>
+            <a href="{% url 'auth_sys:password_reset'%}" class="forgot-password">Forgot password?</a>
             
             <button type="submit" class="login-btn">Login</button>
         </form>
         
         <div class="signup-link">
-            Don't have an account? <a href="{% url 'users:register' %}">Register</a>
+            Don't have an account? <a href="{% url 'auth_sys:register' %}">Register</a>
         </div>
     </div>
 
