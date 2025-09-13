@@ -15,10 +15,18 @@
         <div class="dashboard-header">
             <h1 class="motto">"Read Today, Lead Tomorrow"</h1>
             <div class="search-bar">
-                <input type="text" placeholder="Search from your books..." id="dashboard-search">
-                <button class="search-btn">
+                <input type="text" id="search-input" placeholder="Search books, authors, subjects...">
+                <button class="search-btn" id="search-btn">
                     <i class="fas fa-search"></i>
                 </button>
+            </div>
+        </div>
+
+        <!-- Add this before the closing main tag -->
+        <div id="book-details" class="book-details-modal">
+            <div class="book-details-content">
+                <button class="close-button" onclick="closeBookDetails()">×</button>
+                <div id="book-details-content"></div>
             </div>
         </div>
 

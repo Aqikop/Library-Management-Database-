@@ -291,3 +291,151 @@ document.addEventListener('DOMContentLoaded', () => {
 console.log('🏛️ Welcome to Central Public Library!');
 console.log('📚 Discover the magic of reading and learning.');
 console.log('💻 Built with modern web technologies for the best user experience.');
+
+// ...existing code...
+
+// Search Functionality
+// const searchInput = document.getElementById('search-input');
+// const searchBtn = document.getElementById('search-btn');
+
+async function performSearch() {
+    const mainContent = document.querySelector('.main-content');
+    mainContent.innerHTML = '<div class="loading">Loading...</div>';
+    
+    const searchQuery = searchInput.value.trim();
+    const query = encodeURIComponent(searchQuery);
+    
+    try {
+        const response = await fetch(`https://openlibrary.org/search.json?q=${query}&fields=key,title,author_name,cover_i,subject&limit=100&mode=everything&language=eng`, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+
+        if (!data.docs || data.docs.length === 0) {
+            mainContent.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-search"></i>
+                    <h3>No books found</h3>
+                    <p>Try different keywords or browse our categories</p>
+                </div>`;
+            return;
+        }
+
+        // Filter results
+        const searchTerms = searchQuery.toLowerCase().split(' ');
+        const filteredDocs = data.docs.filter(book => {
+            const titleMatch = book.title?.toLowerCase().split(' ')
+                .some(word => searchTerms.includes(word));
+            const authorMatch = book.author_name?.some(author => 
+                author.toLowerCase().split(' ')
+                    .some(word => searchTerms.includes(word))
+            );
+            const subjectMatch = book.subject?.some(subject =>
+                subject.toLowerCase().split(' ')
+                    .some(word => searchTerms.includes(word))
+            );
+            
+            return titleMatch || authorMatch || subjectMatch;
+        });
+
+        // Create results HTML
+        const resultsHTML = `
+            <div class="search-results">
+                <div class="section-header">
+                    <h2><i class="fas fa-search"></i> Search Results</h2>
+                    <span class="results-count">${filteredDocs.length} books found</span>
+                </div>
+                <div class="book-grid">
+                    ${filteredDocs.slice(0, 50).map(book => `
+                        <div class="book-card" onclick="showBookDetails('${book.key}')">
+                            <div class="book-cover" style="background-image: url(${
+                                book.cover_i 
+                                    ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+                                    : 'https://placehold.co/128x192?text=No+Cover'
+                            })"></div>
+                            <div class="book-title">${book.title || 'Unknown Title'}</div>
+                            <div class="book-author">${book.author_name ? book.author_name[0] : 'Unknown Author'}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>`;
+
+        mainContent.innerHTML = resultsHTML;
+
+    } catch (error) {
+        mainContent.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <h3>Error</h3>
+                <p>${error.message}</p>
+            </div>`;
+    }
+}
+
+async function showBookDetails(workId) {
+    try {
+        const response = await fetch(`https://openlibrary.org${workId}.json`);
+        const data = await response.json();
+
+        const {description, title, covers, subject_places, subject_times, subjects} = data;
+        const bookDetails = {
+            description: description ? (typeof description === 'object' ? description.value : description) : "No description available",
+            title: title,
+            cover_img: covers ? `https://covers.openlibrary.org/b/id/${covers[0]}-L.jpg` : 'https://placehold.co/128x192?text=No+Cover',
+            subject_places: subject_places ? subject_places.join(", ") : "Not available",
+            subject_times: subject_times ? subject_times.join(", ") : "Not available",
+            subjects: subjects ? subjects.join(", ") : "Not available"
+        };
+
+        document.getElementById('book-details-content').innerHTML = `
+            <div class="book-detail-card">
+                <div class="book-detail-cover" style="background-image: url('${bookDetails.cover_img}')"></div>
+                <h2 class="book-detail-title">${bookDetails.title}</h2>
+                <div class="book-detail-info">
+                    <div class="detail-section">
+                        <h3>Description</h3>
+                        <p>${bookDetails.description}</p>
+                    </div>
+                    <div class="detail-section">
+                        <h3>Subjects</h3>
+                        <p>${bookDetails.subjects}</p>
+                    </div>
+                    <div class="detail-section">
+                        <h3>Places</h3>
+                        <p>${bookDetails.subject_places}</p>
+                    </div>
+                    <div class="detail-section">
+                        <h3>Time Periods</h3>
+                        <p>${bookDetails.subject_times}</p>
+                    </div>
+                </div>
+            </div>`;
+
+        document.getElementById('book-details').classList.add('active');
+    } catch (error) {
+        console.error('Error fetching book details:', error);
+    }
+}
+
+function closeBookDetails() {
+    document.getElementById('book-details').classList.remove('active');
+}
+
+// Event Listeners
+searchBtn.addEventListener('click', performSearch);
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        performSearch();
+    }
+});
+
+// Close modal when clicking outside
+document.getElementById('book-details').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+        closeBookDetails();
+    }
+});

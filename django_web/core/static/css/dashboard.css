@@ -640,3 +640,93 @@ body {
     background: #c0392b !important;
     color: white !important;
 }
+
+/* ... existing styles ... */
+
+/* Search Results Styles */
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.no-results {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+}
+
+.no-results i {
+    font-size: 3rem;
+    color: #ddd;
+    margin-bottom: 1rem;
+}
+
+.error-message {
+    text-align: center;
+    padding: 3rem;
+    color: #dc3545;
+}
+
+.results-count {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+/* Book Details Modal */
+.book-details-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    overflow-y: auto;
+}
+
+.book-details-modal.active {
+    display: block;
+}
+
+.book-details-content {
+    background: white;
+    max-width: 800px;
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 15px;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-button:hover {
+    color: #333;
+}
+
+.detail-section {
+    margin-bottom: 1.5rem;
+}
+
+.detail-section h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.detail-section p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* ... existing styles ... */
